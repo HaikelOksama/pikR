@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block pageHead %}Update {{pik.nama}}{% endblock pageHead %}
+{% block page %}Update {{pik.nama}}{% endblock page %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Update <strong>{{pik.nama}}</strong></h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form method="POST">
+          <div class="card-body">
+            {% csrf_token %}
+            {% crispy form%}
+          </div>
+          <!-- /.card-body -->
+
+        </form>
+    </div>
+</div>
+{% endblock %}
+

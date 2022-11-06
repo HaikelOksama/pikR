@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block pageHead %}Dashboard{% endblock pageHead %}
+{% block page %}Dashboard{% endblock page %}
+{% block content %}
+{% load static %}
+<div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+      {% if pik %}
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>{{pik.nama}}</h3>
+
+            <p>PIK Saya</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-home"></i>
+          </div>
+          <a href="{% url 'detail' pik.id %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      {% endif %}
+      
+      {% if request.user.is_superuser %}
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>{{allPik.count}}</h3>
+
+            <p>Semua PIK</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+          </div>
+          <a href="{% url 'listPik' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      {% endif %}
+      <!-- ./col -->
+      
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <!-- The time line -->
+        <div class="timeline">
+          <!-- timeline time label -->
+          <div class="time-label">
+            <span class="bg-info">Aktivitas Terbaru</span>
+          </div>
+          <!-- /.timeline-label -->
+          <!-- timeline item -->
+          {% for k in kegiatan %}
+            
+            <div>
+              <i class="fas fa-clock bg-blue"></i>
+              <div class="timeline-item">
+                <span class="time"><i class="fas fa-clock"></i> {{k.created|timesince}}</span>
+                <h3 class="timeline-header"><a href="#">{{k.pik}}</a> Menambahkan Kegiatan {{k.judul}}</h3>
+
+                <div class="timeline-body">
+                      {% if k.gambar %}
+                      <div class="gambar-kegiatan">
+                        <img src="{{k.gambar.url}}" alt="Product Image">
+                      </div>
+                      {% endif %}
+                  
+                      {{k.deskripsi|safe}}
+
+                      
+                
+                </div>
+                <div class="timeline-footer">
+                  <p class="text-muted">Tanggal Kegiatan {{k.tanggal}}</p>
+                </div>
+              </div>
+            </div> 
+          {% endfor %}
+          
+          <!-- END timeline item -->
+          <div>
+            <i class="fas fa-clock bg-gray"></i>
+          </div>
+        </div>
+      </div>
+      <!-- /.col -->
+    </div>
+  </div>
+  </div><!-- /.container-fluid -->
+
+<style>
+  .timeline-body p {
+    max-width: 100%;
+    overflow:hidden;
+  }
+  .timeline-body p img {
+   
+    width: 100%;
+   
+    overflow:hidden;
+    max-height: 600px;
+    height:auto;
+  }
+</style>
+
+{% endblock content %}

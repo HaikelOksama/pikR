@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block pageHead %}K0 {{pik.nama}}{% endblock pageHead %}
+{% block page %}K0 {{pik.nama}}{% endblock page %}
+{% block content %}
+<div class="container-fluid">
+    <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Tambah K0 <strong>{{pik.nama}}</strong></h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form method="POST" enctype="multipart/form-data">
+          <div class="card-body">
+            {% csrf_token %}
+            {% crispy form%}
+          </div>
+          <!-- /.card-body -->
+
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
+

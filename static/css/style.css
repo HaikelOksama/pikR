@@ -1,0 +1,26 @@
+.gambar-kegiatan {
+    max-height: 500px;
+    max-width: 100%;
+    overflow: hidden;
+}
+.gambar-kegiatan img {
+    width: auto;
+    height: 500px;
+    object-fit: cover;
+}
+
+.pik-info {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    max-height: fit-content;
+}
+
+.pik-info iframe {
+    width: 100%;
+    height: 300px;
+}
+
+.post p img {
+    width: 600px;
+    height: auto;
+    max-height: 500px;
+}

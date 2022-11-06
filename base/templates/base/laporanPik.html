@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block pageHead %}Laporan {{pik.nama}}{% endblock pageHead %}
+{% block page %}Laporan {{pik.nama}}{% endblock page %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Semua PIK</h3>
+
+      
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table id="export-ready-table" class="table-sm table table-hover bg-light table-bordered mt-3 ">
+                <thead class=" table-primary table-borderless text-nowrap">
+                    <tr class="text-center">
+                        <th colspan="5" class="p-3 bg-light" 
+                        data-f-sz="18"
+                        data-a-h="center"
+                        data-a-v="middle"
+                        data-f-underline="true">
+    
+                            Laporan Kegiatan {{pik.nama}}
+                        </th>
+                    </tr>
+                    <tr class="text-center">
+    
+                            <th rowspan="2" data-a-h="center"
+                        data-a-v="middle" data-fill-color="65b1f0">No</th>
+                            <th rowspan="2" data-a-h="center"
+                        data-a-v="middle" data-fill-color="65b1f0">Judul Kegiatan</th>
+                            <th rowspan="2" data-a-h="center"
+                        data-a-v="middle" data-fill-color="65b1f0">Deskripsi</th>
+                            <th rowspan="2" data-a-h="center"
+                        data-a-v="middle" data-fill-color="65b1f0">Tanggal</th>
+                            <th rowspan="2" data-a-h="center"
+                        data-a-v="middle" data-fill-color="65b1f0">Dokumentasi</th>
+                            
+    
+                        
+                    </tr>
+                    
+                </thead>
+                   
+                </thead>
+                <tbody class="table-table-group-divider">
+                    <tr></tr>
+                    {% if kegiatan.count != 0 %}
+                        {% for kegiatan in kegiatan %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{kegiatan.judul}}</td>
+                            <td>{{kegiatan.deskripsi | safe}}</td>
+                            <td>{{kegiatan.tanggal}}</td>
+                            {% if kegiatan.gambar %}
+                            <td data-hyperlink="{{ request.META.HTTP_HOST }}{{kegiatan.gambar.url}}"><a target="_blank" href="{{kegiatan.gambar.url}}">{{ request.META.HTTP_HOST }}{{kegiatan.gambar.url}}</a></td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                    {% comment %} {% if guest_list.count != 0 %}
+                        {% for data in guest_list %}
+                        <tr>
+                            <td>
+                                {{forloop.counter}}
+                            </td>
+                            <td>
+                                {{data.name}}
+                            </td>
+                            <td data-a-h="center">
+                                {% if data.email == None %}
+                                -
+                                {% else %}
+                                {{data.email}}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{data.address}}
+                            </td>
+                            <td>{{data.get_gender_display}}</td>
+                            <td>{{data.phone}}</td>
+                            <td>{{data.needs}}</td>
+                            <td>{{data.reserve_time}}</td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %} {% endcomment %}
+                    
+                    
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <button id="export-xls" class="btn btn-success">Cetak Laporan (Excel)</button>
+        </div>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+{% endblock content %}
+
+

@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block pageHead %}{{pik.nama}}{% endblock pageHead %}
+{% block page %}{{pik.nama}}{% endblock page %}
+
+{% block content %}
+<!-- Default box -->
+<div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+          <div class="row">
+            <div class="col-12 col-sm-6">
+                <a href="{% url 'anggota' pik.id %}">
+                <div class="info-box bg-primary">
+                  <div class="info-box-content">
+                    <span class="info-box-text text-center"><h5>Anggota PIK</h5></span>
+                    <span class="info-box-number text-center mb-0 text-warning"><h4>{{anggota.count}}</h4></span>
+                  </div>
+                </div>
+              </a>
+            </div>
+            
+            <div class="col-12 col-sm-6">
+                <a href="">
+                <div class="info-box bg-primary">
+                  <div class="info-box-content">
+                    <span class="info-box-text text-center "><h5>Kegiatan</h5></span>
+                    <span class="info-box-number text-center  mb-0 text-warning"><h4>{{kegiatan.count}}</h4></span>
+                  </div>
+                </div>
+              </a>
+            </div>
+           
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <h4>Kegiatan Terakhir</h4>
+              <hr>
+                {% if kegiatan %}
+                    {% for kegiatan in kegiatan %}
+                    <div class="post">
+                        <div class="user-block">
+                        
+                            <span class="username">
+                                <h3 class="text-primary">{{kegiatan.judul}}</h3>
+                            </span>
+                            <span class="description">{{kegiatan.tanggal}}</span>
+                        </div>
+                        <!-- /.user-block -->
+                        
+                        {{kegiatan.deskripsi | safe}}
+                       
+                        {% if kegiatan.gambar %}
+                        <div class="gambar-kegiatan">
+                          <img src="{{kegiatan.gambar.url}}" alt="Product Image">
+                        </div>
+                        {% endif %}
+                                                     
+   
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <h3>Belum ada kegiatan pada PIK ini</h3>
+                {% endif %}
+                
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-4 pt-3 order-1 order-md-2 pik-info">
+          {% if request.user == pik.admin %}
+          <a href="{% url 'updatePik' pik.id %}"><h3 class="text-primary"><i class="fas fa-paint-brush"></i>{{pik.nama}}</h3></a>
+          {% else %}
+          <h3 class="text-primary"><i class="fas fa-paint-brush"></i>{{pik.nama}}</h3>
+          {% endif %}
+          <p class="text-muted">
+            {% if pik.deskripsi %}
+              {{pik.deskripsi|safe }}
+              {% else %}
+
+              Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terr.</p>
+            {% endif %}
+          <br>
+          <div class="text-muted">
+            
+            <p class="text-sm">Pengurus
+              <b class="d-block">{{pik.admin.first_name}} {{pik.admin.last_name}}</b>
+            </p>
+          </div>
+
+          <h5 class="mt-5 text-muted">File K0</h5>
+          <ul class="list-unstyled">
+            {% if pik.fileK0 %}
+            <li>
+              <a href="{{pik.fileK0.url}}" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i>{{pik.fileK0.name}}</a>
+            </li>
+            {% else %}
+            <li>
+              <a>Belum Ada File K0</a>
+            </li>
+            {% endif %}
+            
+          </ul>
+          <div class="text-center mt-5 mb-3 gap-3">
+            {% if request.user.is_authenticated %}
+              {% if request.user.is_superuser %}
+                {% if request.user == pik.admin  %}
+                  <a href="{% url 'tambahLaporan' pik.id %}" class="btn btn-sm btn-primary">Tambah Laporan Kegiatan</a>
+                  <a href="{% url 'tambahAnggota' pik.id %}" class="btn btn-sm btn-warning">Tambah Data Anggota</a>
+                  <a href="{% url 'KNol' pik.id %}" class="btn btn-sm btn-success">Tambah File k0</a>
+                {% else %}
+                  <a href="{% url 'laporanPik' pik.id %}" class="btn btn-sm btn-primary">Lihat Laporan Kegiatan</a>
+                {% endif %}
+              {% elif request.user == pik.admin %}
+                <a href="{% url 'tambahLaporan' pik.id %}" class="btn btn-sm btn-primary">Tambah Laporan Kegiatan</a>
+                <a href="{% url 'laporanPik' pik.id %}" class="btn btn-sm btn-primary">Lihat Laporan Kegiatan</a>
+                <a href="{% url 'tambahAnggota' pik.id %}" class="btn btn-sm btn-warning">Tambah Data Anggota</a>
+
+                <a href="{% url 'KNol' pik.id %}" class="btn btn-sm btn-success">Tambah File k0</a>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+<style>
+ 
+  .pik-info {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    height: fit-content;
+  }
+
+  .pik-info iframe {
+    width: 100%;
+    height: 300px;
+}
+</style>
+{% endblock content %}
+
